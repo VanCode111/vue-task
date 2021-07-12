@@ -11,6 +11,7 @@
       />
       <Button class="home__btn" :oClick="openModal" text="Создать задачу" />
       <Cards
+        :dark="dark"
         @onDragStart="onDragStart($event)"
         @onDrop="onDrop($event)"
         :deleteTask="deleteTask"
@@ -66,6 +67,7 @@ export default {
       this.cards = JSON.parse(localStorage.getItem("cards"));
     }
   },
+  props: ["dark"],
   methods: {
     onDragStart({ event, cardsId }) {
       event.dataTransfer.setData("IdTask", cardsId.join(""));
@@ -87,8 +89,9 @@ export default {
       } else {
         this.length++;
         localStorage.setItem("length", this.length);
-        const data = new Date();
-        const dataCalendar = data
+        const date = new Date();
+        const time = `${date.getHours()}:${date.getMinutes()}`;
+        const dataCalendar = date
           .toISOString()
           .replace("-", ".")
           .split("T")[0]
@@ -101,6 +104,7 @@ export default {
           data: dataCalendar,
           priority: 1,
           id: this.length,
+          time: time,
           prioritet: prioritet,
         };
         this.cards[0].cards.push(task);

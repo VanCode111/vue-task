@@ -1,7 +1,7 @@
 <template>
   <div :class="'app ' + (dark ? 'dark' : '')">
     <Header @changeTheme="changeTheme($event)" />
-    <Home />
+    <Home :dark="dark" />
     <Footer />
   </div>
 </template>

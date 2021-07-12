@@ -1,5 +1,5 @@
 <template>
-  <div class="cards">
+  <div :class="'cards ' + (dark ? 'dark' : '')">
     <div class="cards__wrapper card">
       <div
         v-for="(card, indexCard) in cards"
@@ -13,7 +13,7 @@
           {{ card.titleCard + ` (${card.cards.length})` }}
         </h2>
         <div
-          class="cards__card-task"
+          :class="'cards__card-task ' + (dark ? 'dark' : '')"
           v-for="(item, index) in card.cards"
           @dragstart="onDragStart($event, [indexCard, index])"
           draggable="true"
@@ -37,9 +37,10 @@
           <p class="cards__desc">
             {{ item.description }}
           </p>
-          <p class="cards__data">
-            {{ item.data }}
-          </p>
+          <div class="cards__dates">
+            <p>Дата: {{ item.data }}</p>
+            <p>Время: {{ item.time }}</p>
+          </div>
           <div class="cards__buttons">
             <button
               :disabled="!indexCard"
@@ -76,6 +77,7 @@ export default {
   name: "Cards",
   props: {
     cards: Array,
+    dark: Boolean,
     changePriority: Function,
     deleteTask: Function,
     openModal: Function,
@@ -125,7 +127,7 @@ $color-light: #f1f9ff;
     border-radius: 100%;
     width: 20px;
     height: 20px;
-    line-height: 100%;
+    line-height: 20px;
     &.green {
       background-color: green;
     }
@@ -170,6 +172,20 @@ $color-light: #f1f9ff;
   &__title {
     text-align: center;
     color: blue;
+  }
+  &.dark &__card {
+    background-color: #0d0762;
+  }
+  &.dark &__title {
+    color: white;
+  }
+  &.dark &__card-task {
+    background-color: #757579;
+    color: white;
+  }
+  &.dark &__btn {
+    background-color: #11113a;
+    color: white;
   }
 }
 </style>
